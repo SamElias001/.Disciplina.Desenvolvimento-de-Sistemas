@@ -18,6 +18,12 @@ import javax.swing.event.DocumentListener;
  */
 public class tela extends javax.swing.JFrame {
     private boolean lock = true;
+    private static final int ETAPA_SENADOR = 0;
+    private static final int ETAPA_GOVERNADOR = 1;
+    private static final int ETAPA_PRESIDENTE = 2;
+    private int etapaAtual = ETAPA_SENADOR;
+    boolean votoValido = false;
+    
     /**
      * Creates new form tela
      */
@@ -69,7 +75,6 @@ public class tela extends javax.swing.JFrame {
         btnWhiteVote = new javax.swing.JButton();
         btnConfirm = new javax.swing.JButton();
         jpanelPhoto = new javax.swing.JPanel();
-        photo = new javax.swing.JLabel();
         name = new javax.swing.JLabel();
         labelVote = new javax.swing.JLabel();
         labelVote2 = new javax.swing.JLabel();
@@ -77,11 +82,17 @@ public class tela extends javax.swing.JFrame {
         labelParty = new javax.swing.JLabel();
         nameParty = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
+        photo = new javax.swing.JLabel();
+        labelCodes2 = new javax.swing.JLabel();
+        btnHelp = new javax.swing.JButton();
+        labelHelp = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBounds(new java.awt.Rectangle(0, 0, 3, 0));
+        setMaximumSize(new java.awt.Dimension(784, 285));
 
-        labelCodes.setText("Insira o código de desbloqueio");
+        labelCodes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelCodes.setText("INSIRA O CÓDIGO DE DESBLOQUEIO");
 
         btn1.setBackground(new java.awt.Color(51, 51, 51));
         btn1.setForeground(new java.awt.Color(255, 255, 255));
@@ -215,11 +226,11 @@ public class tela extends javax.swing.JFrame {
         jpanelPhoto.setLayout(jpanelPhotoLayout);
         jpanelPhotoLayout.setHorizontalGroup(
             jpanelPhotoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(photo, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+            .addGap(0, 100, Short.MAX_VALUE)
         );
         jpanelPhotoLayout.setVerticalGroup(
             jpanelPhotoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(photo, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+            .addGap(0, 100, Short.MAX_VALUE)
         );
 
         name.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -228,7 +239,6 @@ public class tela extends javax.swing.JFrame {
         labelVote.setText("Seu voto vai para");
 
         labelVote2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        labelVote2.setText("Cargo do voto");
 
         labelName.setText("Nome:");
 
@@ -239,6 +249,18 @@ public class tela extends javax.swing.JFrame {
 
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
+        labelCodes2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
+        btnHelp.setFont(new java.awt.Font("Segoe UI", 0, 6)); // NOI18N
+        btnHelp.setText("Dicas");
+        btnHelp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHelpActionPerformed(evt);
+            }
+        });
+
+        labelHelp.setText("<- Help");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -246,38 +268,48 @@ public class tela extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(labelParty)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(nameParty, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(18, 18, 18))
+                                .addContainerGap()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(0, 0, Short.MAX_VALUE)
+                                        .addComponent(photo, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(labelParty)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(nameParty, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addGap(114, 114, 114))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(labelName)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(name, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addGap(126, 126, 126))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(labelVote)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 190, Short.MAX_VALUE))
+                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 87, Short.MAX_VALUE)
+                                                .addComponent(labelVote2)
+                                                .addGap(195, 195, 195)))
+                                        .addComponent(jpanelPhoto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(labelName)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(name, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(24, 24, 24))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(labelVote)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(labelVote2)
-                                .addGap(93, 93, 93)))
-                        .addComponent(jpanelPhoto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(6, 6, 6))
+                                .addGap(98, 98, 98)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(labelCodes, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
+                                    .addComponent(codes)
+                                    .addComponent(labelCodes2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(40, 40, 40))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(79, 79, 79)
-                                .addComponent(codes, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(102, 102, 102)
-                                .addComponent(labelCodes)))
+                        .addComponent(btnHelp, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(labelHelp)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btn7, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn4, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -298,7 +330,7 @@ public class tela extends javax.swing.JFrame {
                     .addComponent(btnWhiteVote, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnConfirm)
                     .addComponent(btnRemake, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addGap(67, 67, 67))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -330,7 +362,7 @@ public class tela extends javax.swing.JFrame {
                             .addComponent(btnConfirm, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(41, 41, 41))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(labelVote)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -339,29 +371,43 @@ public class tela extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(labelName)
                                     .addComponent(name, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(labelParty)
                                     .addComponent(nameParty, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(jpanelPhoto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jpanelPhoto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(photo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(labelCodes)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(codes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(48, 48, 48))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(labelCodes2)
+                        .addGap(16, 16, 16)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnHelp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(labelHelp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public void desbloquearUrna(){
-        String codeKey = codes.getText();
-        
-        if( codeKey == "1509"){
-            lock = false;
-            labelCodes.setText("Insira o número do candidato");
-        } //////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public void desbloquearUrna() {
+    String codeKey = codes.getText();
+
+    if (codeKey.equals("1509")) {
+        lock = false;
+        labelCodes.setText("Insira o número do candidato");
+        codes.setText(""); 
+        JOptionPane.showMessageDialog(this, "Urna desbloquada");
+        etapaAtual = ETAPA_SENADOR;
+        labelCodes2.setText("Senador(a) (3 dígitos)");
+        labelHelp.setText("");
+    } else {
+        JOptionPane.showMessageDialog(this, "Código incorreto!");
+        codes.setText("");
     }
+}
     
     public void exibirFotoCandidato(String numeroCandidato) {
         String caminho = "Candidatos/" + numeroCandidato;
@@ -393,24 +439,107 @@ public class tela extends javax.swing.JFrame {
     
     private void verificarELoadFoto() {
         String votoDigitado = codes.getText();
-
-        if (votoDigitado.equals("13") && lock == false) {
-            exibirFotoCandidato("13.jpg");
-            name.setText("Luis Inácio Lula da Silva");
-            nameParty.setText("Partido dos Trabalhadores");
-            labelVote2.setText("Presidente");
-        } else if (votoDigitado.equals("22") && lock == false) {
-            exibirFotoCandidato("22.jpg");
-            name.setText("Jair Messias Bolsonaro");
-            nameParty.setText("Partido Liberal");
-            labelVote2.setText("Presidente");
-        } else {
-            photo.setIcon(null);
-            photo.setText("");
-            labelCodes.setText("Insira o número do candidato");
-            name.setText("");
-            nameParty.setText("");
+        
+        switch(etapaAtual){
+            case ETAPA_PRESIDENTE:
+                if (votoDigitado.equals("13") && lock == false) {
+                    exibirFotoCandidato("13.jpg");
+                    name.setText("Luis Inácio Lula da Silva");
+                    nameParty.setText("Partido dos Trabalhadores");
+                    labelVote2.setText("Presidente");
+                } else if (votoDigitado.equals("22") && lock == false) {
+                    exibirFotoCandidato("22.jpg");
+                    name.setText("Jair Messias Bolsonaro");
+                    nameParty.setText("Partido Liberal");
+                    labelVote2.setText("Presidente");
+                } else {
+                    photo.setIcon(null);
+                    photo.setText("");
+                    name.setText("");
+                    nameParty.setText("");
+                }
+                break;
+            case ETAPA_GOVERNADOR:
+                if (votoDigitado.equals("30") && lock == false) {
+                    exibirFotoCandidato("30.jpg");
+                    name.setText("Romeu Zema");
+                    nameParty.setText("Partido Novo");
+                    labelVote2.setText("Governador");
+                } else if (votoDigitado.equals("55") && lock == false) {
+                    exibirFotoCandidato("55.jpg");
+                    name.setText("Ratinho Júnior");
+                    nameParty.setText("Partido Social Democrático");
+                    labelVote2.setText("Govenador");
+                } else if (votoDigitado.equals("15") && lock == false) {
+                    exibirFotoCandidato("15.jpg");
+                    name.setText("Helder Barbalho");
+                    nameParty.setText("Movimento Democrático Brasileiro");
+                    labelVote2.setText("Govenador");
+                }  else {
+                    photo.setIcon(null);
+                    photo.setText("");
+                    name.setText("");
+                    nameParty.setText("");
+                }
+                break;
+            case ETAPA_SENADOR: 
+                if (votoDigitado.equals("222") && lock == false) {
+                    exibirFotoCandidato("222.jpg");
+                    name.setText("Marcos Pontes");
+                    nameParty.setText("Partido Liberal");
+                    labelVote2.setText("Senador");
+                } else if (votoDigitado.equals("200") && lock == false) {
+                    exibirFotoCandidato("200.jpg");
+                    name.setText("Cleitinho Azevedo");
+                    nameParty.setText("Republicanos");
+                    labelVote2.setText("Senador");
+                } else if (votoDigitado.equals("555") && lock == false) {
+                    exibirFotoCandidato("555.jpg");
+                    name.setText("Otto Alencar");
+                    nameParty.setText("Partido Social Democrático");
+                    labelVote2.setText("Senador"); 
+                } else {
+                    photo.setIcon(null);
+                    photo.setText("");
+                    name.setText("");
+                    nameParty.setText("");
+                }
+                break;
         }
+    }
+    
+    private void iniciarEtapa() {
+        switch(etapaAtual) {
+            case ETAPA_SENADOR:
+                codes.setText("");
+                labelVote2.setText("Senador(a)");
+                break;
+                case ETAPA_GOVERNADOR:
+                labelCodes2.setText("Governador(a) (2 dígitos)");
+                codes.setText("");
+                labelVote2.setText("Governador(a)");
+                labelHelp.setText("");
+                break;
+            case ETAPA_PRESIDENTE:
+                labelCodes2.setText("Presidente (2 dígitos)");
+                codes.setText("");
+                labelVote2.setText("Presidente");
+                labelHelp.setText("");
+                break;
+            default:
+                labelCodes.setText("FIM DA VOTAÇÃO. Obrigado!");
+                etapaAtual = 0;
+                labelCodes2.setText("Urna bloqueada");
+                labelHelp.setText("");
+                codes.setText("");
+                lock = true;
+                break;
+        }
+        name.setText("");
+        nameParty.setText("");
+        photo.setIcon(null);
+        photo.setText("");
+        labelVote2.setText("");
     }
     
     private void btn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn1ActionPerformed
@@ -454,18 +583,79 @@ public class tela extends javax.swing.JFrame {
     }//GEN-LAST:event_btn0ActionPerformed
 
     private void btnConfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmActionPerformed
-
-        codes.setText("");
+        if (lock) {
+            desbloquearUrna();
+            return;
+        } 
+        
+        String voto = codes.getText();
+        votoValido = false;
+        String number = codes.getText();
+        
+        switch(etapaAtual){
+            case ETAPA_SENADOR:
+                if(number.equals("222") || number.equals("200") || number.equals("555")){
+                    votoValido = voto.matches("\\d{3}");
+                    break;
+                };
+            case ETAPA_GOVERNADOR:
+                if(number.equals("15") || number.equals("30") || number.equals("55")){
+                    votoValido = voto.matches("\\d{2}");
+                    break;
+                };
+            case ETAPA_PRESIDENTE:
+                if(number.equals("22") || number.equals("13")){
+                    votoValido = voto.matches("\\d{2}");
+                    break;
+                };
+        }
+        
+        if (!votoValido) {
+            JOptionPane.showMessageDialog(this, "Número inválido para esta etapa!");
+            codes.setText("");
+            return;
+        }
+        
+        etapaAtual++;
+        iniciarEtapa();
     }//GEN-LAST:event_btnConfirmActionPerformed
 
     private void btnRemakeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemakeActionPerformed
         codes.setText("");
-
     }//GEN-LAST:event_btnRemakeActionPerformed
 
     private void btnWhiteVoteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnWhiteVoteActionPerformed
+        if (lock) {
+            JOptionPane.showMessageDialog(this, "Desbloqueie a urna primeiro para votar");
+            return;
+        }
         
+        etapaAtual++;
+        iniciarEtapa();
+        codes.setText("");
     }//GEN-LAST:event_btnWhiteVoteActionPerformed
+
+    private void btnHelpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHelpActionPerformed
+        if(lock == true) {
+            labelHelp.setText("1509");
+        } else {
+            switch(etapaAtual) {
+                case ETAPA_SENADOR:
+                    labelHelp.setText("200 || 222 || 555");
+                    break;
+                case ETAPA_GOVERNADOR:
+                    labelHelp.setText("15 || 30 || 55");
+                    break;
+                case ETAPA_PRESIDENTE:
+                    labelHelp.setText("13 || 22");
+                    break;
+                default:
+                    labelHelp.setText("");
+                    break;
+            }
+        }
+                
+    }//GEN-LAST:event_btnHelpActionPerformed
 
     /**
      * @param args the command line arguments
@@ -514,12 +704,15 @@ public class tela extends javax.swing.JFrame {
     private javax.swing.JButton btn8;
     private javax.swing.JButton btn9;
     private javax.swing.JButton btnConfirm;
+    private javax.swing.JButton btnHelp;
     private javax.swing.JButton btnRemake;
     private javax.swing.JButton btnWhiteVote;
     private javax.swing.JTextField codes;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JPanel jpanelPhoto;
     private javax.swing.JLabel labelCodes;
+    private javax.swing.JLabel labelCodes2;
+    private javax.swing.JLabel labelHelp;
     private javax.swing.JLabel labelName;
     private javax.swing.JLabel labelParty;
     private javax.swing.JLabel labelVote;
